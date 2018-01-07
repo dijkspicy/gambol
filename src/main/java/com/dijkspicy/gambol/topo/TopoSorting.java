@@ -1,9 +1,6 @@
-package com.dijkspicy.gambol.model;
+package com.dijkspicy.gambol.topo;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -16,6 +13,7 @@ public class TopoSorting<T extends TopoNode> {
     protected final List<T> nodes;
     protected final Map<Object, T> depToNodeMap = new HashMap<>();
     protected final Function<T, Object> depMapper;
+    private final Queue<List<T>> rounds = new LinkedList<>();
 
     public TopoSorting(List<T> nodes, Function<T, Object> depMapper) {
         this.nodes = nodes;
@@ -27,7 +25,7 @@ public class TopoSorting<T extends TopoNode> {
         this(nodes, TopoNode::getId);
     }
 
-    void sort() {
+    public void sort() {
         if (nodes == null || nodes.isEmpty()) {
             return;
         }
@@ -38,6 +36,7 @@ public class TopoSorting<T extends TopoNode> {
             int index = 0;
             List<T> vertices;
             while (!(vertices = this.chooseVertices(nodesTemp)).isEmpty()) {
+                this.rounds.add(vertices);
                 for (T vertex : vertices) {
                     nodes.set(index++, vertex);
                 }
@@ -69,5 +68,9 @@ public class TopoSorting<T extends TopoNode> {
 
     private Object getDep(T vertex) {
         return depMapper.apply(vertex);
+    }
+
+    public Queue<List<T>> getRounds() {
+        return rounds;
     }
 }

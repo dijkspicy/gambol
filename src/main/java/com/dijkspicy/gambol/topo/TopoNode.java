@@ -1,9 +1,7 @@
-package com.dijkspicy.gambol.model;
+package com.dijkspicy.gambol.topo;
 
 import java.util.Collection;
 import java.util.List;
-
-import com.sun.istack.internal.NotNull;
 
 /**
  * com.dijkspicy.gambol.model

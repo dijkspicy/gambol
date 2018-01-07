@@ -1,4 +1,4 @@
-package com.dijkspicy.gambol.model;
+package com.dijkspicy.gambol.topo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,7 +22,7 @@ public class TopoBatching<T extends TopoNode> extends TopoSorting<T> {
         this(nodes, TopoNode::getId);
     }
 
-    public <B extends Batch> Queue<B> batch(Function<List<Queue<T>>, B> batchMapper) {
+    public <B> Queue<B> batch(Function<List<Queue<T>>, B> batchMapper) {
 
         Queue<B> batches = new LinkedList<>();
         synchronized (this.nodes) {
